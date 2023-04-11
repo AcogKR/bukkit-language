@@ -1,0 +1,8 @@
+plugins {
+    id 'base'
+}
+
+allprojects {
+    group 'dev.acog'
+    version '0.1.0'
+}

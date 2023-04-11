@@ -1,0 +1,25 @@
+plugins {
+    id("java")
+    id 'kr.entree.spigradle' version '2.3.4'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+repositories {
+    mavenCentral()
+    spigotmc()
+}
+
+dependencies {
+    compileOnly spigot('1.19')
+    implementation project(":core")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

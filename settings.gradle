@@ -1,0 +1,18 @@
+rootProject.name = "bukkit-lanaguage"
+
+def modules = [
+        "core",
+        "plugin"
+]
+
+def addModule(String name, String dir = "modules/${name}") {
+    include(name)
+    findProject(":${name}")?.with {
+        projectDir = new File(rootProject.projectDir, dir)
+        buildFileName = "${name}.gradle"
+    }
+}
+
+for (String module : modules) {
+    addModule(module)
+}
