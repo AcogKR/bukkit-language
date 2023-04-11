@@ -1,4 +1,4 @@
-rootProject.name = "bukkit-lanaguage"
+rootProject.name = "bukkit-language"
 
 def modules = [
         "core",
@@ -15,4 +15,8 @@ def addModule(String name, String dir = "modules/${name}") {
 
 for (String module : modules) {
     addModule(module)
+}
+
+rootProject.children.forEach {
+    it.name = "${rootProject.name}-${it.name}"
 }

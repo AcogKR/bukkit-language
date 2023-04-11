@@ -7,7 +7,7 @@ and the name of the language data file must be written in the format of [ISO-639
 For example, the name of the language data file for Korean(kr) based on the Korean(ko) language would be "ko_kr.yml". By writing the file name in this way, the file is recognized as providing data for each language and country setting, 
 allowing data to be provided to clients configured with the corresponding language and country settings.  
 
-[Example is here!](https://github.com/Acogkr/bukkit-language/tree/modules/plugin/src/main/java/dev/acog/bukkit/language/plugin/LanguagePlugin.java)
+[Example is here!](https://github.com/AcogKR/bukkit-language/blob/main/modules/plugin/src/main/java/dev/acog/bukkit/language/plugin/LanguagePlugin.java)  
 
 ## Import
 
