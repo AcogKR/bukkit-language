@@ -5,8 +5,6 @@ The name of the language data file must follow the format of [ISO-639](https://d
 
 For example, the name of the language data file for Korean(kr) based on the Korean(ko) language would be "ko_kr.yml". By writing the file name in this way, the file is recognized as providing data for each language and country setting, allowing data to be provided to clients configured with the corresponding language and country settings.
 
-[Example is here!](https://github.com/AcogKR/bukkit-language/blob/main/modules/plugin/src/main/java/dev/acog/bukkit/language/plugin/LanguagePlugin.java)  
-
 ## Import
 
 This library needs to be published to the local repository by the user.
@@ -35,3 +33,26 @@ dependencies {
 </dependencies>
 ```
 
+```java
+class BukkitLanguagePlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        BukkitLanguage bukkitLanguage = BukkitLanguage.load("ko_kr", getLangFolder());
+        
+        LocateLanguage hangul = bukkitLanguage.getLanguage("ko_kr");
+        LocateLanguage english = bukkitLanguage.getLanguage("en_us");
+                
+        getLogger().info(hangul.get("start_message"));
+        getLogger().info(english.get("start_message"));
+        
+        LocateLanguage hangul = LocateLanguage.load("ko_kr", new File(getDataFolder(), "ko_kr.yml"));
+        getLogger().info(hangul.get("start_message"));
+    }
+
+    private File getLangFolder() {
+        return new File(getDataFolder() + "/langs/");
+    }
+    
+}
+```

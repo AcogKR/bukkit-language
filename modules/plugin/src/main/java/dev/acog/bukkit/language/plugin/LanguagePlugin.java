@@ -17,13 +17,8 @@ public class LanguagePlugin extends JavaPlugin implements CommandExecutor {
 
     @Override
     public void onEnable() {
-        LocateLanguage locateLanguage = language.getLanguage("ko_kr");
-        getCommand("test").setExecutor(this);
-    }
-
-    @Override
-    public void onDisable() {
-        super.onDisable();
+        LocateLanguage locateLanguage = LocateLanguage.load("en_us", new File(getDataFolder(), "en_us.yml"));
+        getLogger().info(locateLanguage.get("start_message"));
     }
 
     private File getLangFolder() {

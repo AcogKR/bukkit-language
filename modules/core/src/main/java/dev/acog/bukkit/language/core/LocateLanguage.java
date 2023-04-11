@@ -1,6 +1,5 @@
 package dev.acog.bukkit.language.core;
 
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -15,6 +14,17 @@ public class LocateLanguage {
 
     private LocateLanguage(String locate) {
         this.locate = locate;
+    }
+
+    private LocateLanguage reload(File path) {
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(path);
+        for (Map.Entry<String, Object> entry : config.getValues(false).entrySet()) {
+            if (!(entry.getValue() instanceof String)) {
+                continue;
+            }
+            languages.put(entry.getKey(), new Language((String) entry.getValue()));
+        }
+        return this;
     }
 
     public String get(String key) {
@@ -34,17 +44,6 @@ public class LocateLanguage {
 
     public static LocateLanguage load(String locate, File path) {
         return new LocateLanguage(locate).reload(path);
-    }
-
-    private LocateLanguage reload(File path) {
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(path);
-        for (Map.Entry<String, Object> entry : config.getValues(false).entrySet()) {
-            if (!(entry.getValue() instanceof String)) {
-                continue;
-            }
-            languages.put(entry.getKey(), new Language((String) entry.getValue()));
-        }
-        return this;
     }
 
 }
