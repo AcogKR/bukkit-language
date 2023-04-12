@@ -32,7 +32,8 @@ dependencies {
     </dependency>
 </dependencies>
 ```
-
+---
+## Example
 ```java
 class BukkitLanguagePlugin extends JavaPlugin {
 
@@ -55,4 +56,13 @@ class BukkitLanguagePlugin extends JavaPlugin {
     }
     
 }
+```
+  
+`ko_kr.yml`
+```yaml
+start_message: &eTest Message
+```
+`en_us.yml`
+```yaml
+start_message: [color=#A24834]Test
 ```
