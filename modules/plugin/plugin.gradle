@@ -1,11 +1,12 @@
 plugins {
     id("java")
-    id 'kr.entree.spigradle' version '2.3.4'
+    id 'kr.entree.spigradle' version '2.4.3'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
     mavenCentral()
+    mavenLocal()
     spigotmc()
 }
 
@@ -20,6 +21,9 @@ java {
     }
 }
 
-test {
-    useJUnitPlatform()
+tasks.assemble.dependsOn(shadowJar)
+
+spigot {
+    apiVersion = "1.19"
+    excludeLibraries = ['*']
 }

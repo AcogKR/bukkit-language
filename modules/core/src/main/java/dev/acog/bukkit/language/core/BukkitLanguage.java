@@ -33,6 +33,7 @@ public class BukkitLanguage {
 
     /**
      * This function returns a LocateLanguage object that contains language data for the given locate.
+     * @param locate ISO-3166 + ISO-3166
      * @throws NumberFormatException locate language not fount
      * @return LocateLanguage.class
      */
@@ -54,6 +55,8 @@ public class BukkitLanguage {
     /**
      * This method creates and returns a BukkitLanguage instance by loading the language
      * file located at the specified path and using the given locate parameter.
+     * @param locale ISO-3166 + ISO-3166
+     * @param path language pack path
      * @return BukkitLanguage.class
      */
     public static BukkitLanguage load(String locale, File path) {

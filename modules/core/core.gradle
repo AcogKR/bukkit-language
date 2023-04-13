@@ -1,12 +1,12 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'kr.entree.spigradle.base' version '2.3.4'
+    id 'kr.entree.spigradle.base' version '2.4.3'
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
     spigotmc()
 }
 
@@ -35,8 +35,5 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
         }
-    }
-    repositories {
-        mavenLocal()
     }
 }
