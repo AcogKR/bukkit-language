@@ -13,16 +13,15 @@ import java.io.File;
 
 public class LanguagePlugin extends JavaPlugin implements CommandExecutor {
 
-    private final BukkitLanguage language = BukkitLanguage.load("ko_kr", getLangFolder());
+    private final BukkitLanguage language = BukkitLanguage.load(this, "ko_kr", getLangFolder());
 
     @Override
     public void onEnable() {
-        LocateLanguage locateLanguage = LocateLanguage.load("en_us", new File(getDataFolder(), "en_us.yml"));
-        getLogger().info(locateLanguage.get("start_message"));
+        getLogger().info(language.getLanguage().get("test_message"));
     }
 
     private File getLangFolder() {
-        return new File(getDataFolder() + "/langs/");
+        return new File(getDataFolder(), "/langs/");
     }
 
     @Override
@@ -33,7 +32,7 @@ public class LanguagePlugin extends JavaPlugin implements CommandExecutor {
         if (args[0].equals("reload")) {
             language.reload();
         } else {
-            player.sendMessage(locateLanguage.get("help.message"));
+            player.sendMessage(locateLanguage.get("test_message"));
         }
         return true;
     }

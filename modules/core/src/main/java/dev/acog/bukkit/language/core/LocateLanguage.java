@@ -16,8 +16,12 @@ public class LocateLanguage {
         this.locate = locate;
     }
 
-    private LocateLanguage reload(File path) {
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(path);
+    public static LocateLanguage load(String locate, File path) {
+        return new LocateLanguage(locate).reload(path);
+    }
+
+    public LocateLanguage reload(File file) {
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         for (Map.Entry<String, Object> entry : config.getValues(false).entrySet()) {
             if (!(entry.getValue() instanceof String)) {
                 continue;
@@ -40,10 +44,6 @@ public class LocateLanguage {
 
     public Map<String, Language> getLanguages() {
         return languages;
-    }
-
-    public static LocateLanguage load(String locate, File path) {
-        return new LocateLanguage(locate).reload(path);
     }
 
 }
