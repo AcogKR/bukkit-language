@@ -37,18 +37,11 @@ dependencies {
 ```java
 class BukkitLanguagePlugin extends JavaPlugin {
 
+    private final BukkitLanguage language = BukkitLanguage.load(this, "ko_kr", getLangFolder());
+
     @Override
     public void onEnable() {
-        BukkitLanguage bukkitLanguage = BukkitLanguage.load("ko_kr", getLangFolder());
-        
-        LocateLanguage hangul = bukkitLanguage.getLanguage("ko_kr");
-        LocateLanguage english = bukkitLanguage.getLanguage("en_us");
-                
-        getLogger().info(hangul.get("start_message"));
-        getLogger().info(english.get("start_message"));
-        
-        LocateLanguage hangul = LocateLanguage.load("ko_kr", new File(getDataFolder(), "ko_kr.yml"));
-        getLogger().info(hangul.get("start_message"));
+        getLogger().info(language.getLanguage().get("test_message"));
     }
 
     private File getLangFolder() {
@@ -61,8 +54,5 @@ class BukkitLanguagePlugin extends JavaPlugin {
 `ko_kr.yml`
 ```yaml
 start_message: &eTest Message
-```
-`en_us.yml`
-```yaml
-start_message: [color=#A24834]Test
+test_message: [color=#A24834]Test
 ```
