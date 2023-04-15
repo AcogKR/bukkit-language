@@ -14,17 +14,28 @@ import java.util.stream.Stream;
 
 public class FileResourcesUtils {
 
-    public static List<Path> getPathsFromResourceJar(File file) {
-        try (FileSystem fs = FileSystems.newFileSystem(
-                URI.create("jar:file:" + FileResourcesUtils.class.getProtectionDomain()
-                        .getCodeSource().getLocation().toURI().getPath()
-                ), Collections.emptyMap()
-        ); Stream<Path> paths = Files.walk(fs.getPath(file.getName()))) {
+    private FileResourcesUtils() {
+    }
+
+    public static List<Path> getPathsFromResourceJar(String folder) {
+        try (
+            FileSystem fs = FileSystems.newFileSystem(getJarURL(), Collections.emptyMap());
+            Stream<Path> paths = Files.walk(fs.getPath(folder))
+        ) {
             return paths.filter(Files::isRegularFile).collect(Collectors.toList());
         } catch (IOException | URISyntaxException e) {
             return null;
         }
     }
 
+    private static URI getJarURL() throws URISyntaxException {
+        return URI.create("jar:file:" + FileResourcesUtils.class
+                .getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .toURI()
+                .getPath()
+        );
+    }
 }
 

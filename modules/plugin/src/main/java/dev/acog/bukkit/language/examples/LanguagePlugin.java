@@ -1,7 +1,7 @@
-package dev.acog.bukkit.language.plugin;
+package dev.acog.bukkit.language.examples;
 
 import dev.acog.bukkit.language.core.BukkitLanguage;
-import dev.acog.bukkit.language.core.LocateLanguage;
+import dev.acog.bukkit.language.core.LocaleLanguage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +27,7 @@ public class LanguagePlugin extends JavaPlugin implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Player player = (Player) sender;
-        LocateLanguage locateLanguage = language.getLanguage(player);
+        LocaleLanguage locateLanguage = language.getLanguage(player);
 
         if (args[0].equals("reload")) {
             language.reload();

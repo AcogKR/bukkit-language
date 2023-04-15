@@ -7,20 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class LocateLanguage {
+public class LocaleLanguage {
 
-    private final String locate;
     private final Map<String, Language> languages = new HashMap<>();
 
-    private LocateLanguage(String locate) {
-        this.locate = locate;
+    private LocaleLanguage() {
     }
 
-    public static LocateLanguage load(String locate, File path) {
-        return new LocateLanguage(locate).reload(path);
+    public static LocaleLanguage load(File path) {
+        return new LocaleLanguage().reload(path);
     }
 
-    public LocateLanguage reload(File file) {
+    public LocaleLanguage reload(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         for (Map.Entry<String, Object> entry : config.getValues(false).entrySet()) {
             if (!(entry.getValue() instanceof String)) {
@@ -37,7 +35,7 @@ public class LocateLanguage {
 
     public Language getLang(String key) {
         if (!languages.containsKey(key)) {
-            throw new NoSuchElementException("Language data not found for key : " + key + " locate : " + this.locate);
+            throw new NoSuchElementException("Language data not found for key : " + key);
         }
         return languages.get(key);
     }
