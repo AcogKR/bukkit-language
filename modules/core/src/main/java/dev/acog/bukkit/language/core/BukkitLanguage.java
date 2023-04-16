@@ -1,78 +1,77 @@
 package dev.acog.bukkit.language.core;
 
 import dev.acog.bukkit.language.core.utils.FileResourcesUtils;
-import org.bukkit.entity.Player;
+import lombok.Data;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Data
 public class BukkitLanguage {
 
-    private final File path;
-    private final String defaultLocale;
-    private final ConcurrentHashMap<String, LocaleLanguage> languages = new ConcurrentHashMap<>();
-
-    private BukkitLanguage(File file, String locale) {
-        this.path = file;
-        this.defaultLocale = locale.toLowerCase();
-    }
+    private final Locale defaultLocale;
+    private final ConcurrentHashMap<Locale, LocaleLanguage> languages;
 
     /**
-     * This method creates and returns a BukkitLanguage instance by loading the language
-     * file localed at the specified path and using the given locale parameter.
-     * @param plugin JavaPlugin Class
-     * @param locale ISO-3166 + ISO-3166
-     * @param file language pack path
+     * This function creates and returns a BukkitLanguage object that stores a multilingual message
+     * map based on the folder path containing language files and the provided locale information.
+     * @param plugin JavaPlugin.class
+     * @param locale Default locale
+     * @param folder Language folder path
+     * @param allFile Whether to apply all files in the path
      * @return BukkitLanguage.class
      */
-    public static BukkitLanguage load(JavaPlugin plugin, String locale, File file) {
-        List<Path> resources = FileResourcesUtils.getPathsFromResourceJar(file.getName());
-        if (resources != null) {
-            for (Path path : resources) {
-                plugin.saveResource(path.toString(), false);
-            }
-        }
-        return new BukkitLanguage(file, locale).reload();
-    }
+    public static BukkitLanguage load(
+            JavaPlugin plugin,
+            Locale locale,
+            File folder,
+            boolean allFile
+    ) {
+        FileResourcesUtils fileUtils = new FileResourcesUtils();
+        String folderName = "/" + folder.getName() + "/";
+        fileUtils.getResourceFolderFiles(folderName, allFile)
+                .forEach(path -> plugin.saveResource(path.toString().substring(1), false));
+        List<File> files = allFile ? fileUtils.getLangAllFiles(folder) : fileUtils.getLangFiles(folder);
+        ConcurrentHashMap<Locale, LocaleLanguage> languages = new ConcurrentHashMap<>();
 
-    public BukkitLanguage reload() {
-        File[] files = path.listFiles((dir, name) -> name.endsWith(".yml"));
-
-        if (files == null || files.length == 0) {
+        if (files.isEmpty()) {
             throw new NoSuchElementException("No language files found in the directory.");
         }
-        languages.clear();
-        for (File localeFile : files) {
-            String locale = localeFile.getName().substring(0, localeFile.getName().length() - 4).toLowerCase();
-            languages.put(locale, LocaleLanguage.load(localeFile));
+
+        for (File file : files) {
+            String fileName = file.getName();
+            Locale fileLocale = convent(fileName.substring(0, fileName.length() - 4));
+            languages.put(fileLocale, LocaleLanguage.load(fileLocale, file));
         }
-        return this;
+
+        return new BukkitLanguage(locale, languages);
     }
 
-    /**
-     * This function returns a localeLanguage object that contains language data for the given locale.
-     * @param locale ISO-3166 + ISO-3166
-     * @throws NullPointerException locale language not fount
-     * @return localeLanguage.class
-     */
-    public LocaleLanguage getLanguage(String locale) {
-        LocaleLanguage language = languages.getOrDefault(locale.toLowerCase(), getLanguage());
+    public LocaleLanguage getLanguage(Locale locale) {
+        LocaleLanguage language = languages.getOrDefault(locale, getLanguage());
         if (language == null) {
             throw new NullPointerException("Language not found for locale : " + locale);
         }
         return language;
     }
 
+    public LocaleLanguage getLanguage(String locale) {
+        return getLanguage(convent(locale));
+    }
+
     public LocaleLanguage getLanguage() {
         return getLanguage(defaultLocale);
     }
 
-    public LocaleLanguage getLanguage(Player player) {
-        return getLanguage(player.getLocale());
+    private static Locale convent(String value) {
+        String[] split = value.split("_");
+        return new Locale(split[0], split[1]);
     }
 
 }
+
+

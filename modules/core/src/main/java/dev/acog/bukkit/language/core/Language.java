@@ -7,19 +7,15 @@ import java.util.regex.Pattern;
 
 public class Language {
 
-    private final String value;
+    private final String lang;
     private final static Pattern pattern = Pattern.compile("\\[color=#(\\d+)\\]");
 
     public Language(String value) {
-        this.value = from(ChatColor.translateAlternateColorCodes('&', value));
-    }
-
-    public String get() {
-        return this.value;
+        this.lang = from(ChatColor.translateAlternateColorCodes('&', value));
     }
 
     public String replace(String[]... pairs) {
-        String result = this.value;
+        String result = this.lang;
         for (String[] pair : pairs) {
             result = result.replace(pair[0], pair[1]);
         }
@@ -31,14 +27,17 @@ public class Language {
         Matcher matcher = pattern.matcher(value);
         while (matcher.find()) {
             String color = ChatColor.of(matcher.group(1)).toString();
-            result.append(value, matcher.start(), matcher.end())
-                    .replace(matcher.start(), matcher.end(), color);
+            result.append(value, matcher.start(), matcher.end()).replace(matcher.start(), matcher.end(), color);
         }
         return result.toString();
     }
 
     public static String[] pair(String key, String value) {
         return new String[] { key, value };
+    }
+
+    public String toString() {
+        return this.lang;
     }
 
 }

@@ -37,7 +37,7 @@ dependencies {
 ```java
 class BukkitLanguagePlugin extends JavaPlugin {
 
-    private final BukkitLanguage language = BukkitLanguage.load(this, "ko_kr", getLangFolder());
+    private final BukkitLanguage language = BukkitLanguage.load(this, Locale.KOREA, getLangFolder(), false);
 
     @Override
     public void onEnable() {
@@ -51,8 +51,7 @@ class BukkitLanguagePlugin extends JavaPlugin {
 }
 ```
   
-`ko_kr.yml`
-```yaml
-start_message: &eTest Message
-test_message: [color=#A24834]Test
+`/langs/ko_kr.yml`
+start_message: '&eTest Message'
+test_message: '[color=#A24834]Test'
 ```
