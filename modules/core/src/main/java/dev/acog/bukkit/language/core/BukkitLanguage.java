@@ -31,12 +31,13 @@ public class BukkitLanguage {
             File folder,
             boolean allFile
     ) {
-        FileResourcesUtils fileUtils = new FileResourcesUtils();
         String folderName = "/" + folder.getName() + "/";
-        fileUtils.getResourceFolderFiles(folderName, allFile)
+        FileResourcesUtils.getResourceFolderFiles(folderName, allFile).stream()
+                .filter(path -> !(new File(plugin.getDataFolder(), path.toString()).exists()))
                 .forEach(path -> plugin.saveResource(path.toString().substring(1), false));
-        List<File> files = allFile ? fileUtils.getLangAllFiles(folder) : fileUtils.getLangFiles(folder);
+
         ConcurrentHashMap<Locale, LocaleLanguage> languages = new ConcurrentHashMap<>();
+        List<File> files = allFile ? FileResourcesUtils.getLangAllFiles(folder) : FileResourcesUtils.getLangFiles(folder);
 
         if (files.isEmpty()) {
             throw new NoSuchElementException("No language files found in the directory.");
