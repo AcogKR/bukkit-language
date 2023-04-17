@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.acog:bukkit-language-core:0.1.0")
+    implementation("dev.acog:bukkit-language-core:0.2.1")
 }
 ```
 
@@ -28,7 +28,7 @@ dependencies {
     <dependency>
         <groupId>dev.acog</groupId>
         <artifactId>bukkit-language-core</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.1</version>
     </dependency>
 </dependencies>
 ```
@@ -52,6 +52,7 @@ class BukkitLanguagePlugin extends JavaPlugin {
 ```
   
 `/langs/ko_kr.yml`
-start_message: '&eTest Message'
-test_message: '[color=#A24834]Test'
+```yaml
+test_message: '&eTest Message'
+command_color: '<color=#A24834> hello world'
 ```
