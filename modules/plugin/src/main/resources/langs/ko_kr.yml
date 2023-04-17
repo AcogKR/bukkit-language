@@ -1,1 +1,2 @@
-test_message: test
+start_message: '&eTest Message'
+test_message: '[color=#A24834]Test'
