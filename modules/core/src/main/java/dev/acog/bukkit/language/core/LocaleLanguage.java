@@ -27,15 +27,10 @@ public class LocaleLanguage {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         Map<String, Language> languages = config.getValues(false).entrySet().stream()
                 .filter(entry -> entry.getValue() instanceof String)
-                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), new Language((String) entry.getValue())))
+                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), Language.create((String) entry.getValue())))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         return new LocaleLanguage(locale, languages);
-    }
-
-
-    public String get(String key) {
-        return getLang(key).toString();
     }
 
     public Language getLang(String key) {
@@ -43,6 +38,10 @@ public class LocaleLanguage {
             throw new NoSuchElementException("Language data not found for key : " + key + "locale : " + locale.toString());
         }
         return languages.get(key);
+    }
+
+    public String get(String key) {
+        return getLang(key).toString();
     }
 
     public Map<String, Language> getLanguages() {

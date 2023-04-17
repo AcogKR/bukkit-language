@@ -12,20 +12,22 @@ import java.util.stream.Stream;
 
 public class FileResourcesUtils {
 
-    public List<Path> getResourceFolderFiles(String folder, boolean allFile) {
+    public static List<Path> getResourceFolderFiles(String folder, boolean allFile) {
         try (
                 FileSystem fs = FileSystems.newFileSystem(getJarURL(), Collections.emptyMap());
                 Stream<Path> paths = allFile
                         ? Files.walk(fs.getPath(folder))
                         : Files.list(fs.getPath(folder))
         ) {
-            return paths.filter(Files::isRegularFile).collect(Collectors.toList());
+            return paths
+                    .filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
         } catch (IOException | URISyntaxException e) {
             return Collections.emptyList();
         }
     }
 
-    private URI getJarURL() throws URISyntaxException {
+    private static URI getJarURL() throws URISyntaxException {
         return URI.create("jar:file:" + FileResourcesUtils.class
                 .getProtectionDomain()
                 .getCodeSource()
@@ -35,13 +37,13 @@ public class FileResourcesUtils {
         );
     }
 
-    public List<File> getLangFiles(File folder) {
+    public static List<File> getLangFiles(File folder) {
         return getFolderFiles(folder)
                 .filter(file -> file.isFile() && file.getName().endsWith(".yml"))
                 .collect(Collectors.toList());
     }
 
-    public List<File> getLangAllFiles(File folder) {
+    public static List<File> getLangAllFiles(File folder) {
         return getFolderFiles(folder)
                 .flatMap(FileResourcesUtils::getFolderFiles)
                 .filter(file -> file.isFile() && file.getName().endsWith(".yml"))
