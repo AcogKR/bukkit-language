@@ -1,4 +1,7 @@
 # bukkit-language
+해당 라이브러리는 플러그인에서 언어팩을 쉽게 지원하도록 하는 라이브러리 입니다.
+아래의 가이드를 따라 쉽게 사용이 가능합니다.
+---
 This is a Java library that provides messages based on Minecraft client language.
 
 The name of the language data file must follow the format of [ISO-639](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) + [ISO-3166](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html).yml  
@@ -56,3 +59,5 @@ class BukkitLanguagePlugin extends JavaPlugin {
 test_message: '&eTest Message'
 command_color: '<color=#A24834> hello world'
 ```
+
+---
