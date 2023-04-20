@@ -6,13 +6,14 @@ plugins {
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    mavenLocal() // local maven load library
     spigotmc()
 }
 
 dependencies {
     compileOnly spigot('1.19')
-    implementation project(":bukkit-language-core")
+    implementation "dev.acog:bukkit-language-core:0.2.1"
+    implementation "io.typecraft:bukkit-view-core:5.1.2"
 }
 
 java {
