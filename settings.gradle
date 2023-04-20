@@ -1,22 +1,18 @@
 rootProject.name = "bukkit-language"
 
-def modules = [
+include(
         "core",
-        "plugin"
-]
+        "example"
+)
 
-def addModule(String name, String dir = "modules/${name}") {
-    include(name)
+def apply(String name, String dir = "modules/${name}") {
     findProject(":${name}")?.with {
+        it.name = "${rootProject.name}-$name"
         projectDir = new File(rootProject.projectDir, dir)
         buildFileName = "${name}.gradle"
     }
 }
 
-for (String module : modules) {
-    addModule(module)
-}
-
 rootProject.children.forEach {
-    it.name = "${rootProject.name}-${it.name}"
+    apply(it.name)
 }
